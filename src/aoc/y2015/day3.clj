@@ -9,17 +9,17 @@
 
 (defn solve [input]
   (->>
-   (reductions navigate [0 0] input)
-   (distinct)
-   (count)))
+    (reductions navigate [0 0] input)
+    (distinct)
+    (count)))
 
 (defn solve2 [input]
   (let [first (->>
-               (take-nth 2 input)
-               (reductions navigate [0 0]))
+                (take-nth 2 input)
+                (reductions navigate [0 0]))
         second (->>
-                (take-nth 2 (next input))
-                (reductions navigate [0 0]))]
+                 (take-nth 2 (next input))
+                 (reductions navigate [0 0]))]
     (count (distinct (concat first second)))))
 
 (comment

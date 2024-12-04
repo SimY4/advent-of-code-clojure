@@ -4,9 +4,9 @@
   ([input] (solve input 4))
   ([input size]
    (->> (partition size 1 input)
-        (keep-indexed #(if (= size (count (distinct %2))) %1))
-        (first)
-        (+ size))))
+     (keep-indexed #(if (= size (count (distinct %2))) %1))
+     (first)
+     (+ size))))
 
 (defn solve2 [input]
   (solve input 14))

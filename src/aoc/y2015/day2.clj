@@ -5,31 +5,31 @@
 
 (defn solve [input]
   (->>
-   (str/split-lines input)
-   (map #(re-seq #"\d+" %))
-   (map (fn [dimentions]
-          (let [sides (->>
-                       (map parse-long dimentions)
-                       (pairs)
-                       (map #(apply * %)))
-                surface (reduce + (map #(* 2 %) sides))
-                extra (apply min sides)]
-            (+ surface extra))))
-   (reduce +)))
+    (str/split-lines input)
+    (map #(re-seq #"\d+" %))
+    (map (fn [dimentions]
+           (let [sides (->>
+                         (map parse-long dimentions)
+                         (pairs)
+                         (map #(apply * %)))
+                 surface (reduce + (map #(* 2 %) sides))
+                 extra (apply min sides)]
+             (+ surface extra))))
+    (reduce +)))
 
 (defn solve2 [input]
   (->>
-   (str/split-lines input)
-   (map #(re-seq #"\d+" %))
-   (map (fn [d]
-          (let [dimentions (map parse-long d)
-                ribbon (->>
-                        (pairs dimentions)
-                        (map (fn [[x y]] (+ (* 2 x) (* 2 y))))
-                        (reduce min))
-                bow (apply * dimentions)]
-            (+ ribbon bow))))
-   (reduce +)))
+    (str/split-lines input)
+    (map #(re-seq #"\d+" %))
+    (map (fn [d]
+           (let [dimentions (map parse-long d)
+                 ribbon (->>
+                          (pairs dimentions)
+                          (map (fn [[x y]] (+ (* 2 x) (* 2 y))))
+                          (reduce min))
+                 bow (apply * dimentions)]
+             (+ ribbon bow))))
+    (reduce +)))
 
 (comment
   (solve input)
