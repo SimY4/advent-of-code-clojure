@@ -18,15 +18,7 @@
                 :else [acc, keep?])) [0 true])
     (first)))
 
-
-(defn ttt [input]
-  (->>
-    (re-seq #"do\(\)|don't\(\)|mul\((\d+),(\d+)\)" input)
-    (filter #(= "do()" (first %)))))
-
-
 (comment
-  (ttt input)
   (solve input)
   (solve2 input))
 
