@@ -20,7 +20,7 @@
         rules (->> (str/split-lines fst)
                 (map #(re-seq #"\d+" %))
                 (group-by first))
-        rules' (into {} (for [[k v] rules] [k (mapv #(first (next %)) v)]))]
+        rules' (into {} (for [[k v] rules] [k (mapv second v)]))]
     (reduce + (for [line (str/split-lines snd)
                     :let [numbers (re-seq #"\d+" line)]
                     :when (ordered? rules' numbers)]
@@ -31,7 +31,7 @@
         rules (->> (str/split-lines fst)
                 (map #(re-seq #"\d+" %))
                 (group-by first))
-        rules' (into {} (for [[k v] rules] [k (mapv #(first (next %)) v)]))]
+        rules' (into {} (for [[k v] rules] [k (mapv second v)]))]
     (reduce + (for [line (str/split-lines snd)
                     :let [numbers (re-seq #"\d+" line)]
                     :when (not (ordered? rules' numbers))
