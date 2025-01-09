@@ -3,14 +3,19 @@
    [aoc.coord :as coord]
    [clojure.string :as str]))
 
+(defn- parse-lines [lines]
+  (reduce 
+    (fn [acc [k v]] (update acc k #(conj % v)))
+    {}
+    (for [[line y] (map vector lines (range))
+          [ch x] (map vector (char-array line) (range))
+          :when (java.lang.Character/isLetterOrDigit ch)]
+      [ch [x y]])))
+
 (defn solve [input]
   (let [lines (str/split-lines input)
         maxXY (count lines)
-        grid (group-by first (for [[line y] (map vector lines (range))
-                                   [ch x] (map vector (char-array line) (range))
-                                   :when (java.lang.Character/isLetterOrDigit ch)]
-                               [ch [x y]]))
-        signals (into {} (for [[k v] grid] [k (mapv second v)]))]
+        signals (parse-lines lines)]
     (count (set (for [coords (vals signals)
                       c1 coords
                       c2 coords
@@ -26,24 +31,20 @@
 (defn solve2 [input] 
   (let [lines (str/split-lines input)
         maxXY (count lines)
-        grid (group-by first (for [[line y] (map vector lines (range))
-                                   [ch x] (map vector (char-array line) (range))
-                                   :when (java.lang.Character/isLetterOrDigit ch)]
-                               [ch [x y]]))
-        signals (into {} (for [[k v] grid] [k (mapv second v)]))]
+        signals (parse-lines lines)]
     (count (set (for [coords (vals signals)
                       c1 coords
                       c2 coords
                       :when (not (= c1 c2))
                       :let [d (mapv - c1 c2)]
                       antinode (->> 
-                                  (iterate #(mapv - % d) c1)
-                                  (take-while (fn [a]
-                                                (and 
-                                                  (<= 0 (first a)) 
-                                                  (<= 0 (second a)) 
-                                                  (< (first a) maxXY) 
-                                                  (< (second a) maxXY)))))
+                                 (iterate #(mapv - % d) c1)
+                                 (take-while (fn [a]
+                                               (and 
+                                                 (<= 0 (first a)) 
+                                                 (<= 0 (second a)) 
+                                                 (< (first a) maxXY) 
+                                                 (< (second a) maxXY)))))
                       ]
                   antinode)))))
 

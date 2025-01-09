@@ -17,25 +17,25 @@
 
 (defn solve [input]
   (let [[fst snd] (str/split input #"\n\n", 2)
-        rules (->> (str/split-lines fst)
-                (map #(re-seq #"\d+" %))
-                (group-by first))
-        rules' (into {} (for [[k v] rules] [k (mapv second v)]))]
+        rules (reduce 
+                (fn [acc [k v]] (update acc k #(conj % v)))
+                {}
+                (map #(re-seq #"\d+" %) (str/split-lines fst)))]
     (reduce + (for [line (str/split-lines snd)
                     :let [numbers (re-seq #"\d+" line)]
-                    :when (ordered? rules' numbers)]
+                    :when (ordered? rules numbers)]
                 (parse-long (nth numbers (/ (count numbers) 2)))))))
 
 (defn solve2 [input] 
   (let [[fst snd] (str/split input #"\n\n", 2)
-        rules (->> (str/split-lines fst)
-                (map #(re-seq #"\d+" %))
-                (group-by first))
-        rules' (into {} (for [[k v] rules] [k (mapv second v)]))]
+        rules (reduce 
+                (fn [acc [k v]] (update acc k #(conj % v)))
+                {}
+                (map #(re-seq #"\d+" %) (str/split-lines fst)))]
     (reduce + (for [line (str/split-lines snd)
                     :let [numbers (re-seq #"\d+" line)]
-                    :when (not (ordered? rules' numbers))
-                    :let [numbers' (order rules' numbers)]]
+                    :when (not (ordered? rules numbers))
+                    :let [numbers' (order rules numbers)]]
                 (parse-long (nth numbers' (/ (count numbers') 2)))))))
 
 (comment
