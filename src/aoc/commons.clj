@@ -13,3 +13,6 @@
       (range bytes-len)
       (map #(nth % bytes)))
     (str hex-chars)))
+
+(defn index-of [pred col]
+  (or (first (keep-indexed #(when (pred %2) %1) col)) -1))

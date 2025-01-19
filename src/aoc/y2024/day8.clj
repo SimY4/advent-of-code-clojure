@@ -7,8 +7,8 @@
   (reduce 
     (fn [acc [k v]] (update acc k #(conj % v)))
     {}
-    (for [[line y] (map vector lines (range))
-          [ch x] (map vector (char-array line) (range))
+    (for [[y line] (map-indexed vector lines)
+          [x ch] (map-indexed vector (char-array line))
           :when (java.lang.Character/isLetterOrDigit ch)]
       [ch [x y]])))
 

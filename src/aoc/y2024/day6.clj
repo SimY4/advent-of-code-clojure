@@ -5,11 +5,11 @@
 
 (defn- parse-field [input]
   [
-   (first (for [[line y] (map vector (str/split-lines input) (range))
+   (first (for [[y line] (map-indexed vector (str/split-lines input))
                 x (range 0 (count line))
                 :when (= (.charAt line x) \^)]
             [x y]))
-   (set (for [[line y] (map vector (str/split-lines input) (range))
+   (set (for [[y line] (map-indexed vector (str/split-lines input))
               x (range 0 (count line))
               :when (= (.charAt line x) \#)]
           [x y]))
