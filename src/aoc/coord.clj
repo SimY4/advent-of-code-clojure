@@ -1,7 +1,7 @@
 (ns aoc.coord)
 
 (def hv-directions [[0 1] [0 -1] [1 0] [-1 0]])
-(def directions (concat hv-directions [[1 1] [1 -1] [-1 1] [-1 -1]]))
+(def directions (vec (concat hv-directions [[1 1] [1 -1] [-1 1] [-1 -1]])))
 
 (defn + [& more] 
   (reduce #(mapv clojure.core/+ %1 %2) [0 0] more))
@@ -21,5 +21,5 @@
 
 (defn right [coord] (opposite (left coord)))
 
-(defn get [str-vec [x y]]
+(defn get [[x y] str-vec]
   (nth (nth str-vec y nil) x nil))

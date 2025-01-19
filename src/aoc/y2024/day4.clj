@@ -12,9 +12,9 @@
     (count (for [x xs
                  direction coord/directions
                  :when (and 
-                         (= \M (coord/get lines (coord/+ x direction)))
-                         (= \A (coord/get lines (coord/+ x direction direction)))
-                         (= \S (coord/get lines (coord/+ x direction direction direction))))] 
+                         (= \M (coord/get (coord/+ x direction) lines))
+                         (= \A (coord/get (coord/+ x direction direction) lines))
+                         (= \S (coord/get (coord/+ x direction direction direction) lines)))] 
              1))))
 
 (defn solve2 [input]
@@ -26,10 +26,10 @@
     (count (for [a as
                  direction [[1 1] [1 -1] [-1 1] [-1 -1]]
                  :when (and 
-                         (= \M (coord/get lines (coord/+ a direction)))
-                         (= \S (coord/get lines (coord/+ a (coord/opposite direction))))
-                         (= \M (coord/get lines (coord/+ a (coord/left direction))))
-                         (= \S (coord/get lines (coord/+ a (coord/right direction)))))] 
+                         (= \M (coord/get (coord/+ a direction) lines))
+                         (= \S (coord/get (coord/+ a (coord/opposite direction)) lines))
+                         (= \M (coord/get (coord/+ a (coord/left direction)) lines))
+                         (= \S (coord/get (coord/+ a (coord/right direction)) lines)))] 
              1))))
 
 (comment
